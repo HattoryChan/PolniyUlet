@@ -1,0 +1,24 @@
+{
+	"b_debug": false,
+	"project id": 3235,
+	"public token": "bOuWP6oIYRZfl29eg02vBLbp1iZPDi2W",
+	
+	"remove ads":
+	{
+		"purchase id": 308,
+		"milliseconds": 10000,
+		"milliseconds debug": 43200000,
+		"ok": 5
+	},
+	
+	"leaderboard": {
+		"orderBy": ["score"],
+		"limit": 7,
+		"includeFields": ["level"],
+		"withMe": "last"
+	},
+	
+	"boost": {
+		"purchase id": 414
+	}
+}

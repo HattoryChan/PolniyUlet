@@ -1,0 +1,165 @@
+{
+	"b_debug": false,
+	
+	"flower": {
+		"radius min and max": [96, 128],
+		"spawn horizontal range": 350,
+		"count spawn min and max": [15, 20],
+		"count spawn min and max debug": [1, 2],
+		"count spawn min and max1": [5, 5],
+		"nectar": {
+			"spawn count min and max": [0, 5],
+			"size": 0.2, "": "factor",
+			"spawn radius": [56, null, 56, 56, 56, 56],
+			"spawn radius vanishing": 56,
+			"spawn radius accelerating": 56,
+			"fade time": 4, "": "factor",
+			"trail": {
+				"step": 50,
+				"offset": 20
+			}
+		},
+		"vanishing speed": 0.1
+	},
+	
+	"bee": {
+		"size": 0.2, "": "factor",
+		"speed": 400,
+		"smooth": 0.0001, "": "0 - off; > 0 = on; [0; 1]",
+		"wings": {
+			"speed": 50,
+			"offset": 30
+		},
+		"add speed": 1.1, "": "factor",
+		"collision radius": 1.5, "": "factor"
+	},
+	
+	"camera": {
+		"speed": 0.4, "": "[0; 1]",
+		"offset": 0.1, "": "[0; 1]"
+	},
+	
+	"web": {
+		"size": 0.4, "": "factor",
+		"offset x": 300,
+		"paws": {
+			"speed": 20,
+			"offset": 10
+		},
+		"head": {
+			"speed": 10,
+			"offset": 0.1
+		},
+		"crazy": {
+			"sine period": 1,
+			"sine magnitude": 100
+		},
+		"gravity": 1500,
+		"max fall speed": 1000
+	},
+	
+	"hive":
+	{
+		"size": 0.5, "": "factor",
+		"bee speed": 100
+	},
+	
+	"hud": {
+		"transition speed": 4, "": "factor",
+		"nectar": {
+			"coords": [
+				[112, 596, 241, 240],
+				[21, 399, 493, 491],
+				[-13, 748, 411, 406],
+				[464, 548, 496, 493],
+				[910, 511, 346, 341],
+				[433, 810, 249, 246],
+				[483, 924, 181, 180],
+				[1044, 448, 496, 493],
+				[983, 495, 357, 356],
+				[1132, 410, 260, 248],
+				[-46, 435, 450, 450]
+			],
+			"move speed": 8
+		},
+		"text size pt": 18,
+		"hives coords": [
+			[275, 847],
+			[118, 720],
+			[345, 618],
+			[525, 492],
+			[248, 382],
+			[88, 247],
+			[426, 165],
+			[275, 15]
+		],
+		
+		"hives threshold": 4,
+		
+		"hives radius factor": 0.05,
+		"hives bee size factor": 0.15
+	},
+	
+	"ads": {
+		"skip count": 3
+	},
+	
+	"score retention rate": [1, 0.75, 0.5],
+	
+	"vibrate ms": "100",
+	
+	"leaderboard": {
+		"text height": 230,
+		"offset y": 350
+	},
+	
+	"level": 4,
+	
+	"modifiers": {
+		"0": [],
+		"1": [],
+		"2": ["accelerating"],
+		"3": ["accelerating"],
+		"4": ["spider"],
+		"5": ["spider"],
+		"6": ["vanishing"],
+		"7": ["vanishing"],
+		"8": ["vertical", "accelerating"],
+		"9": ["vertical", "accelerating"],
+		"10": ["spider", "spider crazy"],
+		"11": ["spider", "spider crazy"],
+		"12": ["horizontal", "vanishing"],
+		"13": ["horizontal", "vanishing"]
+	},
+	
+	"modifiers flower": {
+		"each": 4,
+		"chance": 0.8, "": "percent",
+		"vertical": {
+			"sine period": 1,
+			"sine magnitude": 100
+		},
+		"horizontal": {
+			"sine period": 1,
+			"sine magnitude": 100
+		}
+	},
+	
+	"modifiers bee":
+	{
+		"speed": 1.1, "": "factor"
+	},
+	
+	"taps factor": 1,
+	
+	"fonts": {
+		"ubuntu-bold": "ubuntu-bold_[allfont.net]",
+		"ubuntu-medium": "ubuntu-medium_[allfont.ru]",
+		"ubuntu-regular": "UBUNTU-REGULAR",
+		"georgia": "georgia"
+	},
+	
+	"ok link": "https://ok.ru/game/512001485218",
+	
+	"hashes": [1463794463, 351860021]
+}
