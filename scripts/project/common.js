@@ -1,4 +1,4 @@
-console.info('Last edits Tue Jan 10 23:21:54 2023');
+console.info('Last edits Sat Jan  7 22:14:41 2023');
 
 class Bee
 {
@@ -3039,7 +3039,7 @@ class Hud
 				this._purchase_boost(() => {
 					this.common.game.score *= 2;
 					this._show("win", {b_increase: true});
-				}, () => this._show("win"));
+				}, () => null);
 			};
 			
 			this._set_button_rewarded_video(buttonIncrease);

@@ -5,7 +5,7 @@
 	
 	"remove ads":
 	{
-		"purchase id": 308,
+		"purchase id": 972,
 		"milliseconds": 10000,
 		"milliseconds debug": 43200000,
 		"ok": 5
@@ -19,6 +19,6 @@
 	},
 	
 	"boost": {
-		"purchase id": 414
+		"purchase id": 971
 	}
 }
