@@ -1,4 +1,4 @@
-console.info('Last edits Sat Jan  7 22:14:41 2023');
+console.info('Last edits Fri Jan 20 02:05:58 2023');
 
 class Bee
 {
@@ -893,7 +893,7 @@ class Game
 		
 		this._generate_objects();
 		
-		this.tapsCount = Math.ceil(this._get_count_flowers_on_level() * this.common.config["taps factor"]) + 1;
+		this.generate_taps_count();
 		
 		this._create_trail_of_nectar();
 		
@@ -907,6 +907,11 @@ class Game
 		
 		const beeSprite = this.bee.sprite;
 		this.arrow = this.runtime.objects.Sprite_Arrow.createInstance("bee", beeSprite.x, beeSprite.y);
+	}
+	
+	generate_taps_count()
+	{
+		this.tapsCount = Math.ceil(this._get_count_flowers_on_level() * this.common.config["taps factor"]) + 1;
 	}
 	
 	set_bee_to_last_flower()
@@ -2073,7 +2078,7 @@ class GameScore
 	
 	is_rewarded_video_available()
 	{
-		return true;
+		//return true; //@debug.
 		if (this.b_debug) return false;
 		
 		return this.gs.ads.isRewardedAvailable;
@@ -2642,7 +2647,7 @@ class Hud
 			textOK.sizePt = this.get_text_size_pt(30 * 2);
 			this.objects.push(textOK);*/
 			
-			th = this._metamorphosis({});
+			th = this._metamorphosis({x: 1150, y: 250, w: 100, h: 100}); //всё на глаз.
 			const textOK = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
 			textOK.width = th.w;
 			textOK.height = th.h;
@@ -2991,6 +2996,7 @@ class Hud
 			this._show_rewarded_video(() => {
 				this.common.game.set_bee_to_last_flower();
 				this._set_score_retention_rate();
+				this.common.game.generate_taps_count();
 				this._show("game");
 			}, () => null);
 		};
@@ -3039,7 +3045,7 @@ class Hud
 				this._purchase_boost(() => {
 					this.common.game.score *= 2;
 					this._show("win", {b_increase: true});
-				}, () => null);
+				}, () => this._show("win"));
 			};
 			
 			this._set_button_rewarded_video(buttonIncrease);
@@ -3698,7 +3704,7 @@ class Hud
 		{
 			this.callbacks.purchaseUnavailable = callback;
 			
-			this._show("error", {textFirst: `Платежи не поддерживаются`, textSecond: `Платежи не поддерживаются на данной платформе.`, buttonName: "return before purchase unavailable", textButton: `Закрыть`});
+			this._show("error", {textFirst: `Платежи не поддерживаются`, textSecond: `Платежи не поддерживаются на данной платформе.`, buttonName: "return before purchase unavailable", textButton: `Закрыть`, buttonCallback: callback});
 		}
 	}
 	
