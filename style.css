@@ -68,18 +68,18 @@ html, body, canvas {
 }
 
 @font-face {
-	font-family: 'ubuntu-medium_[allfont.ru]';
-	src: url('fonts/ubuntu-medium_[allfont.ru].ttf') format('truetype');
+	font-family: 'ubuntu-medium';
+	src: url('fonts/ubuntu-medium.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'ubuntu-bold_[allfont.net]';
-	src: url('fonts/ubuntu-bold_[allfont.net].ttf') format('truetype');
+	font-family: 'ubuntu-bold';
+	src: url('fonts/ubuntu-bold.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: 'ubuntu-regular';
-	src: url('fonts/ubuntu-regular.ttf') format('truetype');
+	font-family: 'UBUNTU-REGULAR';
+	src: url('fonts/UBUNTU-REGULAR.TTF') format('truetype');
 }
 
 @font-face {

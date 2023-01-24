@@ -1,4 +1,4 @@
-console.info('Last edits Fri Jan 20 02:05:58 2023');
+console.info('Last edits Mon Jan 23 18:00:22 2023');
 
 class Bee
 {
@@ -466,8 +466,6 @@ class Common
 		
 		this.b_accessDenied = false;
 		
-		//Utils.print_version(runtime);
-		
 		this._common();
 	}
 	
@@ -475,7 +473,10 @@ class Common
 	{
 		const runtime = this.runtime;
 		
-		this.config = await runtime.assets.fetchJson("config.json");
+		//Utils.print_version(runtime);
+		Utils.print_metadata(runtime);
+		
+		this.config = await runtime.assets.fetchJson("files/config.json");
 		const b_debug = this.config["b_debug"];
 		globalThis.b_debug = b_debug; //@debug.
 		if (b_debug) console.log(`%cDEBUG MODE`, `background-color: #e004bf;`);
@@ -2038,7 +2039,7 @@ class GameScore
 	{
 		if (this.b_debug)
 		{
-			const result = await Utils.promise("debug_leaderboard.json", this.common.runtime, 1000);
+			const result = await Utils.promise("files/test/leaderboard.json", this.common.runtime, 1000);
 			
 			return result;
 		}
@@ -2208,7 +2209,7 @@ class GameScore
 	
 	async _set_load_config() //@task. надо сделать чтобы этот метод вызывался только один раз. если у меня не загрузится SDK с первого раза, то этот метод вызовется ещё раз.
 	{
-		const gameScoreJson = await this.assets.fetchJson("game_score.json");
+		const gameScoreJson = await this.assets.fetchJson("files/game_score.json");
 		this.gameScoreConfig = gameScoreJson
 		this.b_debug = gameScoreJson["b_debug"];
 		this.projectId = gameScoreJson["project id"];
@@ -3037,15 +3038,26 @@ class Hud
 			buttonIncrease.setAnimation("increase");
 			buttonIncrease.width = th.w;
 			buttonIncrease.height = th.h;
-			buttonIncrease.buttonTap = () => {
+			buttonIncrease.buttonTap = async () => {
 				/*this._show_rewarded_video(() => {
 					this.common.game.score *= 2;
 					this._show("win", {b_increase: true});
 				}, () => null);*/
-				this._purchase_boost(() => {
+				/*this._purchase_boost(() => {
 					this.common.game.score *= 2;
 					this._show("win", {b_increase: true});
-				}, () => this._show("win"));
+				}, () => this._show("win"));*/
+				this._purchase_boost(() => null, () => null);
+				const gsPurchase = await Utils.event_promise(globalThis, "gs purchase");
+				if (gsPurchase.detail.isSuccess)
+				{
+					this.common.game.score *= 2;
+					this._show("win", {b_increase: true});
+				}
+				else
+				{
+					this._show("win");
+				}
 			};
 			
 			this._set_button_rewarded_video(buttonIncrease);
@@ -3212,19 +3224,19 @@ class Hud
 		
 		textTutorial.set_text(`СОБЕРИ НЕКТАР И\nДОСТАВЬ В УЛЕЙ.\n\nНЕ ПОЗВОЛЯЙ ПЧЕЛЕ\nУЛЕТЕТЬ ЗА ЭКРАН.\n\n[color=${bottomTextColor}]ДЛЯ ПРОДОЛЖЕНИЯ\nКОСНИСЬ ЭКРАНА[/color]`);
 		
-		await Utils.event_promise("tap gesture", globalThis);
+		await Utils.event_promise(globalThis, "tap gesture");
 		
 		textTutorial.set_text(`РЯДОМ С ЦВЕТАМИ\nПЧЕЛА ЛЕТАЕТ ПО КРУГУ.\n\nСТРЕЛКА ПОКАЗЫВАЕТ\nНАПРАВЛЕНИЕ ПОЛЁТА,\nПОСЛЕ КАСАНИЯ.\n\n[color=${bottomTextColor}]ДЛЯ ПРОДОЛЖЕНИЯ\nКОСНИСЬ ЭКРАНА.[/color]`);
 		
-		await Utils.event_promise("tap gesture", globalThis);
+		await Utils.event_promise(globalThis, "tap gesture");
 		
 		textTutorial.set_text(`КАЖДОЕ КАСАНИЕ -\nПОВОРОТ ПЧЕЛЫ.\n\nКОЛ-ВО ПОВОРОТОВ\nОГРАНИЧЕННО.\n\nСЧЕТЧИК ПОВОРОТОВ В\nЛЕВОМ ВЕРХНЕМ УГЛУ.`);
 		
-		await Utils.event_promise("tap gesture", globalThis);
+		await Utils.event_promise(globalThis, "tap gesture");
 		
 		textTutorial.set_text(`ЗА СБИТОГО ПАУКА\nПОЛУЧИШЬ БОНУС.\n\nНЕ ПОПАДИСЬ В\nПАУТИНУ.\n\n[color=${bottomTextColor}]ДЛЯ ПРОДОЛЖЕНИЯ\nКОСНИСЬ ЭКРАНА.[/color]`);
 		
-		await Utils.event_promise("tap gesture", globalThis);
+		await Utils.event_promise(globalThis, "tap gesture");
 		
 		this._show("game");
 	}
@@ -3346,6 +3358,7 @@ class Hud
 			
 			this._show("error", {textFirst: `Покупка не удалась\nОшибка №${errorNumber}`, textSecond, buttonName: "return before error purchase", textButton: `Понятно`, buttonCallback: () => {
 				this.callbacks.purchase();
+				Utils.dispatch_event("gs purchase", {isSuccess: false});
 			}});
 		});
 		
@@ -3356,6 +3369,7 @@ class Hud
 			
 			this._show("error", {textFirst: `Оплата успешно произведена`, textSecond: `Спасибо, что совершили покупку. Успехов в дальнейшей игре!`, buttonName: "return before success purchase", textButton: `Закрыть`, buttonCallback: () => {
 				this._sync(() => this.callbacks.purchase());
+				Utils.dispatch_event("gs purchase", {isSuccess: true});
 			}});
 		});
 	}

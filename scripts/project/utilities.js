@@ -1,37 +1,3 @@
-/*
-runtime.random() [0; 1) Return a random number in the range [0, 1). This is similar to Math.random(), but can produce a deterministic sequence of values if the Advanced Random object overrides the system random.
-Math.random() [0; 1)
-
-Math.PI
-
-Math.abs(x)
-Math.exp(x)
-Math.log(x) - натуральный логарифм числа
-Math.sign(x)
-Math.pow(x, y) (или a ** b)
-Math.sqrt(x)
-
-Math.sin(x)
-Math.cos(x)
-Math.tan(x)
-Math.asin(x)
-Math.acos(x)
-Math.atan(x)
-Math.atan2(y, x)
-
-Math.hypot(x, y)
-
-Math.round(x) Math.round(-1.2)	// -1
-Math.floor(x) Math.floor(-1.2)	// -2
-Math.ceil(x)  Math.ceil(-1.2)	// -1
-
-Math.min(x, y, ...)
-Math.max(x, y, ...)
-Math.max() //-Infinity
-
-Math.exp(x)
-*/
-
 import {clamp} from "./mathutil.js";
 
 export function lerp_dt(a, b, t, dt)
@@ -529,32 +495,38 @@ export function get_rotate_point(x, y, angle, hotspotX=0, hotspotY=0)
 	return [resultX, resultY];
 }
 
-export function dispatch_event(name, detail=null)
+export function dispatch_event(eventName, detail=null)
 {
-	globalThis.dispatchEvent(new CustomEvent(name, {detail}));
+	globalThis.dispatchEvent(new CustomEvent(eventName, {detail}));
 }
 
-export function event_promise(name, object, callback=() => true)
+export function event_promise(obj, eventName, handler=() => true)
 {
 	return new Promise(resolve => {
 		function check_end(e)
 		{
-			if (!callback(e)) return;
+			if (!handler(e)) return;
 			
-			object.removeEventListener(name, check_end);
+			obj.removeEventListener(eventName, check_end);
 			resolve(e);
 		}
 		
-		object.addEventListener(name, check_end);
+		obj.addEventListener(eventName, check_end);
 	});
 }
 
-export function promise_promise(name, object, otherPromise, callback=() => true)
+export function promise_promise(obj, eventName, otherPromise, handler=() => true)
 {
 	return new Promise(async resolve => {
-		object.addEventListener(name, callback);
-		await otherPromise;
-		object.removeEventListener(name, callback);
-		resolve();
+		obj.addEventListener(eventName, handler);
+		const result = await otherPromise;
+		obj.removeEventListener(eventName, handler);
+		resolve(result);
 	});
+}
+
+export async function print_metadata(runtime)
+{
+	const metadata = await runtime.assets.fetchJson("files/metadata.json");
+	console.info(`[metadata] ${metadata["file name"]}\n${metadata["assembly time"]}`);
 }
