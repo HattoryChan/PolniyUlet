@@ -1,4 +1,4 @@
-console.info('Last edits Mon Jan 23 18:00:22 2023');
+console.info('Last edits Tue Jan 24 12:09:51 2023');
 
 class Bee
 {
@@ -2079,7 +2079,7 @@ class GameScore
 	
 	is_rewarded_video_available()
 	{
-		//return true; //@debug.
+		//return false; //@debug.
 		if (this.b_debug) return false;
 		
 		return this.gs.ads.isRewardedAvailable;
@@ -2993,16 +2993,27 @@ class Hud
 		buttonContinue.setAnimation("resurrect");
 		buttonContinue.width = th.w;
 		buttonContinue.height = th.h;
-		buttonContinue.buttonTap = () => {
-			this._show_rewarded_video(() => {
+		buttonContinue.buttonTap = async () => {
+			const callback = () => {
 				this.common.game.set_bee_to_last_flower();
 				this._set_score_retention_rate();
 				this.common.game.generate_taps_count();
 				this._show("game");
-			}, () => null);
+			};
+			if (this.common.gameScore.is_rewarded_video_available())
+			{
+				this._show_rewarded_video(() => {
+					callback();
+				}, () => null);
+			}
+			else
+			{
+				await Mathutil.wait(100); //хз почему, но почему-то пчела начинает лететь.
+				callback();
+			}
 		};
 		
-		this._set_button_rewarded_video(buttonContinue);
+		//this._set_button_rewarded_video(buttonContinue);
 	}
 	
 	_window_win(opts)
@@ -3632,6 +3643,7 @@ class Hud
 	_set_button_rewarded_video(button)
 	{
 		button.saveName = button.name;
+		button.saveButtonTap = button.buttonTap;
 		
 		const boxWithTick = new BoxWithTick();
 		
@@ -3639,6 +3651,7 @@ class Hud
 			const b_available = this.common.gameScore.is_rewarded_video_available();
 			button.name = b_available ? button.saveName : "";
 			button.isVisible = b_available;
+			button.buttonTap = b_available ? button.saveButtonTap : undefined;
 		});
 	}
 	

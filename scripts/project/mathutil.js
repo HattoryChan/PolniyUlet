@@ -214,7 +214,7 @@ export function round(x) // duplicate Math.round.
 	return Math.round(x);
 }
 
-export function roundToDp(value, exp)
+export function roundToDp(value, exp) //кажется не работает.
 {
 	return decimalAdjust('round', value, exp);
 }
@@ -317,7 +317,13 @@ function is_outside_screen(inst)
 {
 	//я не уверен, что именно так.
 	const viewport = inst.layer.getViewport();
-	return inst.x < viewport.left || inst.y < viewport.top || inst.x > viewport.right || inst.y > viewport.bottom;
+	const bBox = inst.getBoundingBox();
+	return bBox.right < viewport.left || bBox.bottom < viewport.top || bBox.left > viewport.right || bBox.top > viewport.bottom;
+}
+
+export function wait(milliseconds)
+{
+	return new Promise(resolve => setTimeout(() => resolve(), milliseconds));
 }
 
 //Classic functions. Math:
