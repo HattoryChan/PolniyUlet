@@ -1,4 +1,4 @@
-console.info('Last edits Tue Jan 24 12:09:51 2023');
+console.info('Last edits Thu Jan 26 13:37:47 2023');
 
 class Bee
 {
@@ -1962,6 +1962,12 @@ class GameScore
 			
 			console.log(this.get_timestamp());
 		});
+		
+		this.common.runtime.addEventListener("keydown", async e => {
+			if (e.code !== "KeyQ") return;
+			
+			
+		});
 	}
 	
 	async init()
@@ -2205,6 +2211,13 @@ class GameScore
 		console.log('purchase boost');
 		
 		await this._purchase(this.gameScoreConfig["boost"]["purchase id"]);
+	}
+	
+	async get_price_boost()
+	{
+		const result = await this.gs.payments.fetchProducts();
+		const boost = result["products"].filter(product => product["id"] === this.gameScoreConfig["boost"]["purchase id"])[0];
+		return boost["price"];
 	}
 	
 	async _set_load_config() //@task. надо сделать чтобы этот метод вызывался только один раз. если у меня не загрузится SDK с первого раза, то этот метод вызовется ещё раз.
@@ -3016,12 +3029,14 @@ class Hud
 		//this._set_button_rewarded_video(buttonContinue);
 	}
 	
-	_window_win(opts)
+	async _window_win(opts)
 	{
 		if (opts === null) opts = {};
 		const {b_increase=false} = opts;
 		
 		let th = null;
+		
+		const price = await this.common.gameScore.get_price_boost();
 		
 		th = this._metamorphosis({x: 0, y: 0, w: 1440, h: 2560});
 		const table = this.runtime.objects.Sprite_Table.createInstance("hud", th.x, th.y);
@@ -3046,7 +3061,7 @@ class Hud
 			th = this._metamorphosis({x: 741, y: 850 * 2, w: 270 * 2, h: 150 * 2}, true);
 			const buttonIncrease = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
 			this._this_is_button(buttonIncrease, "increase");
-			buttonIncrease.setAnimation("increase");
+			buttonIncrease.setAnimation("increase ok");
 			buttonIncrease.width = th.w;
 			buttonIncrease.height = th.h;
 			buttonIncrease.buttonTap = async () => {
@@ -3071,7 +3086,19 @@ class Hud
 				}
 			};
 			
-			this._set_button_rewarded_video(buttonIncrease);
+			th = this._metamorphosis({x: 380, y: 1830, w: 580 * 2, h: 80 * 2}); //всё на глаз.
+			const textPrice = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+			textPrice.width = th.w;
+			textPrice.height = th.h;
+			textPrice.text = `${price}`;
+			textPrice.horizontalAlign = "center";
+			textPrice.verticalAlign = "center";
+			textPrice.fontFace = this.fonts["ubuntu-medium"];
+			textPrice.fontColor = [242, 252, 36].map(color => color / 255);
+			textPrice.sizePt = this.get_text_size_pt(30 * 2);
+			this.objects.push(textPrice);
+			
+			//this._set_button_rewarded_video(buttonIncrease);
 		}
 		
 		th = this._metamorphosis({x: 70 * 2, y: 520 * 2, w: 580 * 2, h: 80 * 2});

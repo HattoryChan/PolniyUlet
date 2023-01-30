@@ -1,5 +1,5 @@
 {
-	"b_debug": false,
+	"b_debug": true,
 	
 	"flower": {
 		"radius min and max": [96, 128],
@@ -150,7 +150,7 @@
 		"speed": 1.1, "": "factor"
 	},
 	
-	"taps factor": 1,
+	"taps factor": 1.5,
 	
 	"fonts": {
 		"ubuntu-bold": "ubuntu-bold",

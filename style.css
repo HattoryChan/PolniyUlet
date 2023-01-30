@@ -61,29 +61,11 @@ html, body, canvas {
 	content: " • ";
 }
 
-
-@font-face {
-	font-family: 'comic';
-	src: url('fonts/comic.ttf') format('truetype');
+/* screen reader text */
+.c3-screen-reader-text {
+	position: absolute;
+	width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
 }
-
-@font-face {
-	font-family: 'ubuntu-medium';
-	src: url('fonts/ubuntu-medium.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'ubuntu-bold';
-	src: url('fonts/ubuntu-bold.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'UBUNTU-REGULAR';
-	src: url('fonts/UBUNTU-REGULAR.TTF') format('truetype');
-}
-
-@font-face {
-	font-family: 'georgia';
-	src: url('fonts/georgia.ttf') format('truetype');
-}
-
