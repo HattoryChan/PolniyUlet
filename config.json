@@ -150,7 +150,7 @@
 		"speed": 1.1, "": "factor"
 	},
 	
-	"taps factor": 1,
+	"taps factor": 1, 
 	
 	"fonts": {
 		"ubuntu-bold": "ubuntu-bold_[allfont.net]",
