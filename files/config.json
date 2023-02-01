@@ -1,5 +1,5 @@
 {
-	"b_debug": true,
+	"b_debug": false,
 	
 	"flower": {
 		"radius min and max": [96, 128],

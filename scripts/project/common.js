@@ -1,4 +1,4 @@
-console.info('Last edits Thu Jan 26 13:37:47 2023');
+console.info('Last edits Mon Jan 30 10:10:31 2023');
 
 class Bee
 {
@@ -2136,6 +2136,7 @@ class GameScore
 	
 	is_payments_available()
 	{
+		return false; //@debug.
 		return this.gs.payments.isAvailable;
 	}
 	
@@ -3073,7 +3074,7 @@ class Hud
 					this.common.game.score *= 2;
 					this._show("win", {b_increase: true});
 				}, () => this._show("win"));*/
-				this._purchase_boost(() => null, () => null);
+				this._purchase_boost(() => null, () => this._show("win"));
 				const gsPurchase = await Utils.event_promise(globalThis, "gs purchase");
 				if (gsPurchase.detail.isSuccess)
 				{
