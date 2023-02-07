@@ -1,4 +1,4 @@
-console.info('Last edits Mon Jan 30 10:10:31 2023');
+console.info('Last edits Tue Feb  7 09:37:02 2023');
 
 class Bee
 {
@@ -2136,7 +2136,6 @@ class GameScore
 	
 	is_payments_available()
 	{
-		return false; //@debug.
 		return this.gs.payments.isAvailable;
 	}
 	
@@ -2611,97 +2610,100 @@ class Hud
 		const b_remove_ads_purchased = this.common.gameScore.is_remove_ads_purchased();
 		const boxWithTick = new BoxWithTick();
 		
-		if (!b_remove_ads_purchased)
-		//if (false) //@debug.
+		if (false)
 		{
-			let thInstance, thOffset = null;
-			
-			th = this._metamorphosis({x: 519 * 2, y: 8 * 2, w: 185 * 2, h: 175 * 2}, true);
-			const buttonRemoveAds = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
-			this._this_is_button(buttonRemoveAds, "remove ads");
-			buttonRemoveAds.setAnimation("remove ads green");
-			buttonRemoveAds.width = th.w;
-			buttonRemoveAds.height = th.h;
-			boxWithTick.append(buttonRemoveAds, () => {
-				buttonRemoveAds.b_enabled = !b_remove_ads_purchased;
-				buttonRemoveAds.colorRgb = b_remove_ads_purchased ? [1, 0, 0] : [1, 1, 1];
-			});
-			buttonRemoveAds.buttonTap = () => {
-				this._click_remove_ads();
-			};
-			
-			const buttonRemoveAdsBBox = buttonRemoveAds.getBoundingBox();
-			
-			const gameScore = this.common.gameScore;
-			
-			const [textHoursOffsetWidth, textHoursOffsetHeight] = [185, 83];
-			thInstance = this._metamorphosis({w: textHoursOffsetWidth + 13, h: textHoursOffsetHeight + 168});
-			thOffset = this._metamorphosis({w: textHoursOffsetWidth, h: textHoursOffsetHeight});
-			const textHours = this.runtime.objects.Text_HUD.createInstance("hud", buttonRemoveAdsBBox.left + thOffset.w, buttonRemoveAdsBBox.top + thOffset.h);
-			textHours.width = th.w - thInstance.w;
-			textHours.height = th.h - thInstance.h;
-			textHours.text = `${gameScore.get_hours_remove_ads()}ч`;
-			textHours.horizontalAlign = "center";
-			textHours.verticalAlign = "center";
-			textHours.fontFace = this.fonts["ubuntu-medium"];
-			textHours.sizePt = this.get_text_size_pt(36 * 2);
-			this.objects.push(textHours);
-			
-			/*const [textOKOffsetWidth, textOKOffsetHeight] = [109, 230];
-			thInstance = this._metamorphosis({w: textOKOffsetWidth + 166, h: textOKOffsetHeight + 14});
-			thOffset = this._metamorphosis({w: textOKOffsetWidth, h: textOKOffsetHeight});
-			const textOK = this.runtime.objects.Text_HUD.createInstance("hud", buttonRemoveAdsBBox.left + thOffset.w, buttonRemoveAdsBBox.top + thOffset.h);
-			textOK.width = th.w - thInstance.w;
-			textOK.height = th.h - thInstance.h;
-			textOK.angleDegrees = 9;
-			textOK.text = `${gameScore.get_ok_remove_ads()}`;
-			textOK.horizontalAlign = "center";
-			textOK.verticalAlign = "center";
-			textOK.fontFace = this.fonts["ubuntu-medium"];
-			textOK.fontColor = [242, 252, 36].map(color => color / 255);
-			textOK.sizePt = this.get_text_size_pt(30 * 2);
-			this.objects.push(textOK);*/
-			
-			th = this._metamorphosis({x: 1150, y: 250, w: 100, h: 100}); //всё на глаз.
-			const textOK = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
-			textOK.width = th.w;
-			textOK.height = th.h;
-			textOK.angleDegrees = 9;
-			textOK.text = `${gameScore.get_ok_remove_ads()}`;
-			textOK.horizontalAlign = "center";
-			textOK.verticalAlign = "center";
-			textOK.fontFace = this.fonts["ubuntu-medium"];
-			textOK.fontColor = [242, 252, 36].map(color => color / 255);
-			textOK.sizePt = this.get_text_size_pt(30 * 2);
-			this.objects.push(textOK);
-		}
-		else
-		{
-			th = this._metamorphosis({x: 1032, y: 66, w: 180, h: 178});
-			const icon = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
-			icon.setAnimation("remove ads purchase");
-			icon.width = th.w;
-			icon.height = th.h;
-			this.objects.push(icon);
-			
-			th = this._metamorphosis({x: 1219, y: 115, w: 500, h: 500}); //@task. wh ?
-			const textHours = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
-			textHours.width = th.w;
-			textHours.height = th.h;
-			//textHours.text = `72:00`; //@task. реальные значения поставить.
-			textHours.fontFace = this.fonts["ubuntu-bold"];
-			textHours.fontColor = [52, 18, 12].map(color => color / 255);
-			textHours.sizePt = this.get_text_size_pt(190 / 3.5); //на глаз делил.
-			this.objects.push(textHours);
-			boxWithTick.append(textHours, () => {
-				const timestamp = this.common.gameScore.get_timestamp();
-				const seconds = timestamp / 1000;
-				const minutes = Math.floor(seconds / 60);
-				const minutesPad = String(minutes).padStart(2, "0");
-				const hours = Math.floor((seconds / 60) / 60);
-				const hoursPad = String(hours).padStart(2, "0");
-				textHours.text = `${hoursPad}:${minutesPad}`;
-			});
+			if (!b_remove_ads_purchased)
+			//if (false) //@debug.
+			{
+				let thInstance, thOffset = null;
+				
+				th = this._metamorphosis({x: 519 * 2, y: 8 * 2, w: 185 * 2, h: 175 * 2}, true);
+				const buttonRemoveAds = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
+				this._this_is_button(buttonRemoveAds, "remove ads");
+				buttonRemoveAds.setAnimation("remove ads green");
+				buttonRemoveAds.width = th.w;
+				buttonRemoveAds.height = th.h;
+				boxWithTick.append(buttonRemoveAds, () => {
+					buttonRemoveAds.b_enabled = !b_remove_ads_purchased;
+					buttonRemoveAds.colorRgb = b_remove_ads_purchased ? [1, 0, 0] : [1, 1, 1];
+				});
+				buttonRemoveAds.buttonTap = () => {
+					this._click_remove_ads();
+				};
+				
+				const buttonRemoveAdsBBox = buttonRemoveAds.getBoundingBox();
+				
+				const gameScore = this.common.gameScore;
+				
+				const [textHoursOffsetWidth, textHoursOffsetHeight] = [185, 83];
+				thInstance = this._metamorphosis({w: textHoursOffsetWidth + 13, h: textHoursOffsetHeight + 168});
+				thOffset = this._metamorphosis({w: textHoursOffsetWidth, h: textHoursOffsetHeight});
+				const textHours = this.runtime.objects.Text_HUD.createInstance("hud", buttonRemoveAdsBBox.left + thOffset.w, buttonRemoveAdsBBox.top + thOffset.h);
+				textHours.width = th.w - thInstance.w;
+				textHours.height = th.h - thInstance.h;
+				textHours.text = `${gameScore.get_hours_remove_ads()}ч`;
+				textHours.horizontalAlign = "center";
+				textHours.verticalAlign = "center";
+				textHours.fontFace = this.fonts["ubuntu-medium"];
+				textHours.sizePt = this.get_text_size_pt(36 * 2);
+				this.objects.push(textHours);
+				
+				/*const [textOKOffsetWidth, textOKOffsetHeight] = [109, 230];
+				thInstance = this._metamorphosis({w: textOKOffsetWidth + 166, h: textOKOffsetHeight + 14});
+				thOffset = this._metamorphosis({w: textOKOffsetWidth, h: textOKOffsetHeight});
+				const textOK = this.runtime.objects.Text_HUD.createInstance("hud", buttonRemoveAdsBBox.left + thOffset.w, buttonRemoveAdsBBox.top + thOffset.h);
+				textOK.width = th.w - thInstance.w;
+				textOK.height = th.h - thInstance.h;
+				textOK.angleDegrees = 9;
+				textOK.text = `${gameScore.get_ok_remove_ads()}`;
+				textOK.horizontalAlign = "center";
+				textOK.verticalAlign = "center";
+				textOK.fontFace = this.fonts["ubuntu-medium"];
+				textOK.fontColor = [242, 252, 36].map(color => color / 255);
+				textOK.sizePt = this.get_text_size_pt(30 * 2);
+				this.objects.push(textOK);*/
+				
+				th = this._metamorphosis({x: 1150, y: 250, w: 100, h: 100}); //всё на глаз.
+				const textOK = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+				textOK.width = th.w;
+				textOK.height = th.h;
+				textOK.angleDegrees = 9;
+				textOK.text = `${gameScore.get_ok_remove_ads()}`;
+				textOK.horizontalAlign = "center";
+				textOK.verticalAlign = "center";
+				textOK.fontFace = this.fonts["ubuntu-medium"];
+				textOK.fontColor = [242, 252, 36].map(color => color / 255);
+				textOK.sizePt = this.get_text_size_pt(30 * 2);
+				this.objects.push(textOK);
+			}
+			else
+			{
+				th = this._metamorphosis({x: 1032, y: 66, w: 180, h: 178});
+				const icon = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
+				icon.setAnimation("remove ads purchase");
+				icon.width = th.w;
+				icon.height = th.h;
+				this.objects.push(icon);
+				
+				th = this._metamorphosis({x: 1219, y: 115, w: 500, h: 500}); //@task. wh ?
+				const textHours = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+				textHours.width = th.w;
+				textHours.height = th.h;
+				//textHours.text = `72:00`; //@task. реальные значения поставить.
+				textHours.fontFace = this.fonts["ubuntu-bold"];
+				textHours.fontColor = [52, 18, 12].map(color => color / 255);
+				textHours.sizePt = this.get_text_size_pt(190 / 3.5); //на глаз делил.
+				this.objects.push(textHours);
+				boxWithTick.append(textHours, () => {
+					const timestamp = this.common.gameScore.get_timestamp();
+					const seconds = timestamp / 1000;
+					const minutes = Math.floor(seconds / 60);
+					const minutesPad = String(minutes).padStart(2, "0");
+					const hours = Math.floor((seconds / 60) / 60);
+					const hoursPad = String(hours).padStart(2, "0");
+					textHours.text = `${hoursPad}:${minutesPad}`;
+				});
+			}
 		}
 		
 		th = this._metamorphosis({x: 180 * 2, y: 1064 * 2, w: 360 * 2, h: 200 * 2}, true);
@@ -2828,57 +2830,63 @@ class Hud
 		tableSettings.height = th.h;
 		this.objects.push(tableSettings);
 		
-		th = this._metamorphosis({x: 85 * 2, y: 604 * 2, w: 550 * 2, h: 70 * 2});
-		const textAuthor = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
-		textAuthor.width = th.w;
-		textAuthor.height = th.h;
-		//`Music by Josh Woodward.\nMain menu - "East Side Bar";\nGame - "Water in the Creek";\nFree download: http://joshwoodward.com/`;
-		textAuthor.text = `Автор музыки - Josh Woodward\nwww.joshwoodward.com`;
-		textAuthor.horizontalAlign = "center";
-		textAuthor.verticalAlign = "center";
-		textAuthor.fontFace = this.fonts["ubuntu-regular"];
-		textAuthor.fontColor = [136, 22, 39].map(color => color / 255);
-		textAuthor.sizePt = this.get_text_size_pt(16 * 2);
-		this.objects.push(textAuthor);
-		
-		if (!this.common.gameScore.is_remove_ads_purchased())
+		if (false)
 		{
-			th = this._metamorphosis({x: 198 * 2, y: 700 * 2, w: 324 * 2, h: 180 * 2}, true);
-			const buttonRemoveAds = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
-			this._this_is_button(buttonRemoveAds, "remove ads");
-			buttonRemoveAds.setAnimation("remove ads");
-			buttonRemoveAds.animationFrame = 2;
-			buttonRemoveAds.width = th.w;
-			buttonRemoveAds.height = th.h;
-			buttonRemoveAds.buttonTap = () => {
-				this._click_remove_ads();
-			};
-			
-			const gameScore = this.common.gameScore;
-			
-			th = this._metamorphosis({x: 310 * 2, y: 708 * 2, w: 100 * 2, h: 50 * 2});
-			const textTime = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
-			textTime.width = th.w;
-			textTime.height = th.h;
-			textTime.text = `${gameScore.get_hours_remove_ads()}ч`;
-			textTime.horizontalAlign = "center";
-			textTime.verticalAlign = "center";
-			textTime.fontFace = this.fonts["ubuntu-medium"];
-			textTime.fontColor = [37, 84, 37].map(color => color / 255);
-			textTime.sizePt = this.get_text_size_pt(38 * 2);
-			this.objects.push(textTime);
-			
-			th = this._metamorphosis({x: 300 * 2, y: 796 * 2, w: 60 * 2, h: 50 * 2});
-			const textOK = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
-			textOK.width = th.w;
-			textOK.height = th.h;
-			textOK.text = `${gameScore.get_ok_remove_ads()}`;
-			textOK.horizontalAlign = "center";
-			textOK.verticalAlign = "center";
-			textOK.fontFace = this.fonts["ubuntu-medium"];
-			textOK.fontColor = [255, 255, 0].map(color => color / 255);
-			textOK.sizePt = this.get_text_size_pt(38 * 2);
-			this.objects.push(textOK);
+			th = this._metamorphosis({x: 85 * 2, y: 604 * 2, w: 550 * 2, h: 70 * 2});
+			const textAuthor = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+			textAuthor.width = th.w;
+			textAuthor.height = th.h;
+			//`Music by Josh Woodward.\nMain menu - "East Side Bar";\nGame - "Water in the Creek";\nFree download: http://joshwoodward.com/`;
+			textAuthor.text = `Автор музыки - Josh Woodward\nwww.joshwoodward.com`;
+			textAuthor.horizontalAlign = "center";
+			textAuthor.verticalAlign = "center";
+			textAuthor.fontFace = this.fonts["ubuntu-regular"];
+			textAuthor.fontColor = [136, 22, 39].map(color => color / 255);
+			textAuthor.sizePt = this.get_text_size_pt(16 * 2);
+			this.objects.push(textAuthor);
+		}
+		
+		if (false)
+		{
+			if (!this.common.gameScore.is_remove_ads_purchased())
+			{
+				th = this._metamorphosis({x: 198 * 2, y: 700 * 2, w: 324 * 2, h: 180 * 2}, true);
+				const buttonRemoveAds = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
+				this._this_is_button(buttonRemoveAds, "remove ads");
+				buttonRemoveAds.setAnimation("remove ads");
+				buttonRemoveAds.animationFrame = 2;
+				buttonRemoveAds.width = th.w;
+				buttonRemoveAds.height = th.h;
+				buttonRemoveAds.buttonTap = () => {
+					this._click_remove_ads();
+				};
+				
+				const gameScore = this.common.gameScore;
+				
+				th = this._metamorphosis({x: 310 * 2, y: 708 * 2, w: 100 * 2, h: 50 * 2});
+				const textTime = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+				textTime.width = th.w;
+				textTime.height = th.h;
+				textTime.text = `${gameScore.get_hours_remove_ads()}ч`;
+				textTime.horizontalAlign = "center";
+				textTime.verticalAlign = "center";
+				textTime.fontFace = this.fonts["ubuntu-medium"];
+				textTime.fontColor = [37, 84, 37].map(color => color / 255);
+				textTime.sizePt = this.get_text_size_pt(38 * 2);
+				this.objects.push(textTime);
+				
+				th = this._metamorphosis({x: 300 * 2, y: 796 * 2, w: 60 * 2, h: 50 * 2});
+				const textOK = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+				textOK.width = th.w;
+				textOK.height = th.h;
+				textOK.text = `${gameScore.get_ok_remove_ads()}`;
+				textOK.horizontalAlign = "center";
+				textOK.verticalAlign = "center";
+				textOK.fontFace = this.fonts["ubuntu-medium"];
+				textOK.fontColor = [255, 255, 0].map(color => color / 255);
+				textOK.sizePt = this.get_text_size_pt(38 * 2);
+				this.objects.push(textOK);
+			}
 		}
 		
 		if (b_startGame)
