@@ -1,4 +1,4 @@
-console.info('Last edits Tue Feb  7 09:37:02 2023');
+console.info('Last edits Thu Feb  9 12:57:31 2023');
 
 class Bee
 {
@@ -2213,6 +2213,13 @@ class GameScore
 		await this._purchase(this.gameScoreConfig["boost"]["purchase id"]);
 	}
 	
+	async purchase_resurrection()
+	{
+		console.log('purchase resurrection');
+		
+		await this._purchase(this.gameScoreConfig["resurrection"]["purchase id"]);
+	}
+	
 	async get_price_boost()
 	{
 		const result = await this.gs.payments.fetchProducts();
@@ -3012,7 +3019,7 @@ class Hud
 		th = this._metamorphosis({x: 750, y: 850 * 2, w: 270 * 2, h: 150 * 2}, true);
 		const buttonContinue = this.runtime.objects.Sprite_Button.createInstance("hud", th.x, th.y);
 		this._this_is_button(buttonContinue, "continue");
-		buttonContinue.setAnimation("resurrect");
+		buttonContinue.setAnimation("resurrect ok");
 		buttonContinue.width = th.w;
 		buttonContinue.height = th.h;
 		buttonContinue.buttonTap = async () => {
@@ -3022,7 +3029,7 @@ class Hud
 				this.common.game.generate_taps_count();
 				this._show("game");
 			};
-			if (this.common.gameScore.is_rewarded_video_available())
+			/*if (this.common.gameScore.is_rewarded_video_available())
 			{
 				this._show_rewarded_video(() => {
 					callback();
@@ -3032,6 +3039,17 @@ class Hud
 			{
 				await Mathutil.wait(100); //хз почему, но почему-то пчела начинает лететь.
 				callback();
+			}*/
+			this._purchase_ressurection(() => null, () => this._show("loss"));
+			const gsPurchase = await Utils.event_promise(globalThis, "gs purchase");
+			if (gsPurchase.detail.isSuccess)
+			{
+				await Mathutil.wait(100); //хз почему, но почему-то пчела начинает лететь.
+				callback();
+			}
+			else
+			{
+				this._show("loss");
 			}
 		};
 		
@@ -3227,6 +3245,7 @@ class Hud
 		{
 			case "remove ads": this.common.gameScore.remove_ads(); break;
 			case "boost": this.common.gameScore.purchase_boost(); break;
+			case "ressurection": this.common.gameScore.purchase_resurrection(); break;
 		}
 	}
 	
@@ -4112,6 +4131,24 @@ class Hud
 		if (this.common.gameScore.is_payments_available())
 		{
 			this._show("purchase", {callback: callbackIfSuccess, item: "boost"});
+		}
+		else
+		{
+			this.callbacks.purchaseUnavailable = callbackElse;
+			
+			this._show("error", {textFirst: `Платежи не поддерживаются`, textSecond: `Платежи не поддерживаются на данной платформе.`, buttonName: "return before purchase unavailable", textButton: `Закрыть`, buttonCallback: () => {
+				this.callbacks.purchaseUnavailable();
+			}});
+		}
+	}
+	
+	_purchase_ressurection(callbackIfSuccess, callbackElse)
+	{
+		console.log('_purchase_ressurection');
+		
+		if (this.common.gameScore.is_payments_available())
+		{
+			this._show("purchase", {callback: callbackIfSuccess, item: "ressurection"});
 		}
 		else
 		{
