@@ -1,4 +1,4 @@
-console.info('Last edits Thu Feb  9 12:57:31 2023');
+console.info('Last edits Mon Feb 27 17:19:15 2023');
 
 class Bee
 {
@@ -1140,13 +1140,26 @@ class Game
 	
 	_create_background()
 	{
-		const viewport = this._get_viewport("background");
+		const runtime = this.runtime;
 		
-		const background = this.runtime.objects.Sprite_Background.createInstance("background", this._get_center_x("background"), this._get_center_y("background"));
+		const background = runtime.objects.Sprite_Background.createInstance("background", 0, 0);
 		this.background = background;
-		const scale = Math.max(viewport.width / background.width, viewport.height / background.height);
-		background.width *= scale;
-		background.height *= scale;
+		
+		(background.set_form = () => {
+			const viewport = this._get_viewport("background");
+			
+			const x = this._get_center_x("background");
+			const y = this._get_center_y("background");
+			const scale = Math.max(viewport.width / background.width, viewport.height / background.height);
+			
+			background.x = x;
+			background.y = y;
+			background.width *= scale;
+			background.height *= scale;
+			console.warn('background set form');
+		})();
+		
+		runtime.addEventListener("resize", () => background.set_form());
 	}
 	
 	_change_background()
