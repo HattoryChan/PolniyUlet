@@ -1,4 +1,4 @@
-console.info('Last edits Mon Feb 27 17:19:15 2023');
+console.info('Last edits Wed Mar  1 05:37:54 2023');
 
 class Bee
 {
@@ -1156,7 +1156,6 @@ class Game
 			background.y = y;
 			background.width *= scale;
 			background.height *= scale;
-			console.warn('background set form');
 		})();
 		
 		runtime.addEventListener("resize", () => background.set_form());
@@ -2240,6 +2239,13 @@ class GameScore
 		return boost["price"];
 	}
 	
+	async get_price_ressurection()
+	{
+		const result = await this.gs.payments.fetchProducts();
+		const ressurection = result["products"].filter(product => product["id"] === this.gameScoreConfig["resurrection"]["purchase id"])[0];
+		return ressurection["price"];
+	}
+	
 	async _set_load_config() //@task. надо сделать чтобы этот метод вызывался только один раз. если у меня не загрузится SDK с первого раза, то этот метод вызовется ещё раз.
 	{
 		const gameScoreJson = await this.assets.fetchJson("files/game_score.json");
@@ -2981,9 +2987,12 @@ class Hud
 		this.leaderboard.create_players();
 	}
 	
-	_window_loss()
+	async _window_loss()
 	{
 		let th = null;
+		
+		let price = "7";
+		if (!this.common.gameScore.gameScoreConfig["b_debug"]) price = await this.common.gameScore.get_price_ressurection();
 		
 		th = this._metamorphosis({x: 0, y: 0, w: 720 * 2, h: 1280 * 2});
 		const table = this.runtime.objects.Sprite_Table.createInstance("hud", th.x, th.y);
@@ -3066,6 +3075,18 @@ class Hud
 			}
 		};
 		
+		th = this._metamorphosis({x: 380, y: 1830, w: 580 * 2, h: 80 * 2}); //всё на глаз.
+		const textPrice = this.runtime.objects.Text_HUD.createInstance("hud", th.x, th.y);
+		textPrice.width = th.w;
+		textPrice.height = th.h;
+		textPrice.text = `${price}`;
+		textPrice.horizontalAlign = "center";
+		textPrice.verticalAlign = "center";
+		textPrice.fontFace = this.fonts["ubuntu-medium"];
+		textPrice.fontColor = [242, 252, 36].map(color => color / 255);
+		textPrice.sizePt = this.get_text_size_pt(30 * 2);
+		this.objects.push(textPrice);
+		
 		//this._set_button_rewarded_video(buttonContinue);
 	}
 	
@@ -3076,7 +3097,8 @@ class Hud
 		
 		let th = null;
 		
-		const price = await this.common.gameScore.get_price_boost();
+		let price = "5";
+		if (!this.common.gameScore.gameScoreConfig["b_debug"]) price = await this.common.gameScore.get_price_boost();
 		
 		th = this._metamorphosis({x: 0, y: 0, w: 1440, h: 2560});
 		const table = this.runtime.objects.Sprite_Table.createInstance("hud", th.x, th.y);
